@@ -1,58 +1,105 @@
-# ATS Resume Expert: AI-Powered Resume Evaluation
+# ATS Consultant: AI-Powered Resume Evaluation
 
 ## Overview
 
-**ATS Resume Expert** is a web application designed to assist job seekers by analyzing their resumes in comparison to a job description. The app utilizes **Google's Gemini Pro Vision** generative AI model to provide comprehensive feedback and evaluate resume alignment with a given job description. The system can:
+**ATS Consultant** is a web-based tool designed to evaluate resumes against specific job descriptions using AI. This app simulates the role of an Applicant Tracking System (ATS), helping job seekers assess how well their resumes align with job postings in the tech field. The system analyzes key elements such as keyword matching, profile summary, and skill improvements, providing comprehensive and actionable feedback to enhance the resume.
 
-- Review a resume from a human resource perspective.
-- Assess the percentage match of the resume with a job description.
-- Highlight strengths, weaknesses, missing keywords, and other relevant insights for improvement.
+The application uses Google's **Generative AI (gemini-pro)** to perform in-depth analysis of resumes in PDF format and compare them against job descriptions provided by users. The app focuses on technical roles such as **software engineering**, **data science**, **data analysis**, and **big data engineering**.
 
-### Key Features:
-1. **AI-Powered Resume Review**: Uses the `gemini-pro-vision` model to analyze resumes and provide detailed feedback on how well a candidate's profile aligns with a specific job description.
-2. **Applicant Tracking System (ATS) Evaluation**: The app evaluates how well the resume would pass through an ATS, providing a match percentage and listing missing keywords.
-3. **PDF Resume Upload**: Allows users to upload their resume in PDF format, which is then converted to an image and processed by the AI model.
-4. **Job Description Input**: Users can input a job description text that is used as the basis for evaluating the resume.
-5. **Streamlit-Based UI**: A simple and user-friendly interface built using Streamlit.
+## Features
 
-## App Design
+- **AI-Powered Resume Review**: Utilizes Google's gemini-pro model to generate detailed feedback on how well a candidate's resume matches a job description.
+- **ATS Simulation**: Provides a percentage match based on keyword alignment and evaluates the profile's strengths and weaknesses.
+- **PDF Upload**: Allows users to upload their resumes in PDF format, which is then processed by the AI for analysis.
+- **Skill Suggestions**: Highlights areas of improvement, offering suggested skills that candidates can add to strengthen their profiles.
+- **Streamlit-Based Interface**: A simple and user-friendly UI for job seekers to upload resumes and receive instant feedback.
 
-### 1. App Architecture
-The application is divided into the following main components:
+## App Architecture
 
-- **PDF Handling and Conversion**: Upload the resume (PDF), convert it into an image, and encode it in base64 format to pass to the AI model.
-- **Generative AI Model Interaction**: Google’s Gemini AI model (`gemini-pro-vision`) is used to generate content and analyze the resume.
-- **Streamlit User Interface**: Provides an easy-to-use interface for users to upload resumes, input job descriptions, and view AI-generated feedback.
+The application is divided into three main components:
 
-### 2. App Flow
-#### User Inputs:
-- **Job Description**: Users enter a job description in a text area.
-- **Resume Upload**: Users upload their resume in PDF format.
+1. **PDF Handling**: Users upload their resume as a PDF. The application extracts text from the file using PyPDF2.
+2. **Generative AI Integration**: The extracted resume text and job description are passed to Google's gemini-pro model for evaluation.
+3. **Streamlit User Interface**: A lightweight and interactive web interface is provided for easy interaction and result display.
 
-#### AI Processing:
-- The uploaded PDF is converted into an image and sent to the Google Gemini AI model along with the job description and predefined prompts.
-- The AI model processes the resume and returns a detailed response evaluating the candidate's fit for the job.
+## App Flow
 
-#### Outputs:
-- **Human Resource Review**: Provides detailed feedback on the alignment between the resume and the job description.
-- **ATS Evaluation**: Gives a percentage match of the resume based on ATS standards, including missing keywords and additional insights.
-
-### 3. App Interface Design
-The Streamlit app interface is minimalistic and user-friendly, containing:
-- **Title and Header**: Sets the context for the application.
-- **Text Area for Job Description**: Input box for users to paste the job description.
-- **PDF Uploader**: A file uploader to accept PDF resumes.
-- **Buttons for Different Actions**:
-  - **"Tell Me About the Resume"**: For detailed feedback.
-  - **"Percentage Match"**: To calculate the percentage match for ATS systems.
-- **Results Section**: Displays the AI-generated feedback and evaluation.
+1. **User Inputs**:
+    - **Job Description**: Users input the job description in a text area.
+    - **Resume Upload**: Users upload their resume in PDF format.
+    
+2. **AI Processing**:
+    - The uploaded PDF is converted to text, and both the resume text and job description are passed to the AI model.
+    - The AI analyzes the resume and returns feedback in a structured format.
+    
+3. **Outputs**:
+    - **JD Match Percentage**: Shows how closely the resume matches the job description.
+    - **Missing Keywords**: Lists any keywords present in the job description but missing from the resume.
+    - **Profile Summary**: Provides a brief analysis of the resume’s strengths and weaknesses.
+    - **Skill Improvements**: Offers suggestions on which skills the candidate can improve or add.
 
 ## Technologies Used
 
-- **Python**: Core language for building the backend and business logic.
-- **Streamlit**: Provides a simple, interactive UI.
-- **Google Generative AI**: For using the Gemini Pro Vision model to generate responses and evaluate resumes.
-- **pdf2image**: Converts PDF resumes into images for AI processing.
-- **Pillow (PIL)**: For handling images, particularly the first page of the PDF resume.
-- **Base64**: Encoding images into base64 format for passing them to the AI model.
-- **dotenv**: To manage API keys and other sensitive data securely.
+- **Python**: Core programming language for the backend.
+- **Streamlit**: Provides a simple and interactive web interface.
+- **Google Generative AI**: Utilized for the `gemini-pro` model to generate feedback and analysis.
+- **PyPDF2**: Extracts text from PDF resumes for processing.
+- **dotenv**: Manages environment variables like API keys securely.
+- **Pillow (PIL)**: Handles image processing if required (optional).
+
+## Installation and Setup
+
+To set up and run this application locally, follow these steps:
+
+### Prerequisites
+
+- Python 3.x
+- Google Cloud API Key for Generative AI
+- streamlit
+- google-generativeai
+- PyPDF2
+
+### Steps
+1. **Clone the Repository:** 
+
+  - git clone https://github.com/yourusername/ats-consultant.git
+
+2. **Navigate to the Project Directory:**
+
+ -  cd ats-consultant
+
+3. **Install the Required Dependencies:**
+
+  - pip install -r requirements.txt
+
+4. **Set up Environment Variables:**
+
+ -  Create a .env file in the root directory and add your Google API key:
+  - GOOGLE_API_KEY=your-google-api-key
+
+5. **Run the Application:**
+
+ -  streamlit run app.py
+
+## Usage
+- Upload Resume: Upload your resume as a PDF.
+- Enter Job Description: Paste the relevant job description into the text area.
+- Submit: Click the "Submit" button to see the evaluation results.
+
+### Example Output
+The output is provided in a structured JSON format with key insights such as:
+
+{
+  "JD Match": "85%",
+  "Missing Keywords": ["Python", "Machine Learning"],
+  "Profile Summary": "The resume has a strong background in data science...",
+  "Skill Improvements": ["Python", "Big Data"]
+}
+
+
+
+
+
+
+
+
